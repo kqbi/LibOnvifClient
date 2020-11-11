@@ -47,7 +47,7 @@ int ONVIF_GetStreamUri(const char *MediaXAddr, char *ProfileToken, char *uri, un
 	SOAP_ASSERT(NULL != uri);
 	memset(uri, 0x00, sizeuri);
 
-	SOAP_ASSERT(NULL != (soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT)));
+	soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT);
 
 	memset(&req, 0x00, sizeof(req));
 	memset(&rep, 0x00, sizeof(rep));
@@ -159,7 +159,7 @@ int ONVIF_GetSnapshotUri(const char *MediaXAddr, char *ProfileToken, char *uri, 
 	SOAP_ASSERT(NULL != uri);
 	memset(uri, 0x00, sizeuri);
 
-	SOAP_ASSERT(NULL != (soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT)));
+	soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT);
 
 	ONVIF_SetAuthInfo(soap, username, password);
 

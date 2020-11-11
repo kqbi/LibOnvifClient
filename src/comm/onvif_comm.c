@@ -5,7 +5,7 @@
 #include "onvif_comm.h"
 #include "onvif_dump.h"
 
-/*
+
 int substr(char *s1, char *s2)
 {
 	char *s3 = strstr(s1, s2);
@@ -13,7 +13,7 @@ int substr(char *s1, char *s2)
 	    return -1;
 	return strlen(s1) - strlen(s3);
 }
-*/
+
 
 void soap_perror(struct soap *soap, const char *str)
 {
@@ -38,9 +38,8 @@ void* ONVIF_soap_malloc(struct soap *soap, unsigned int n)
 
 struct soap *ONVIF_soap_new(int timeout)
 {
-    struct soap *soap = NULL;                                                   // soap环境变量
-
-    SOAP_ASSERT(NULL != (soap = soap_new()));
+    struct soap *soap = NULL;                                                   
+    soap = soap_new();
 	
     soap_set_namespaces(soap, namespaces);                                      // 设置soap的namespaces
     soap->recv_timeout    = timeout;                                            // 设置超时（超过指定时间没有数据就退出）
@@ -363,10 +362,10 @@ int ONVIF_GetProfiles(const char *MediaXAddr, struct tagProfile **profiles, cons
     struct _trt__GetProfilesResponse    rep;
 
     SOAP_ASSERT(NULL != MediaXAddr);
-    SOAP_ASSERT(NULL != (soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT)));
+    soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT);
 
-	if (ONVIF_SetAuthInfo(soap, username, password))
-		return -1;			// 验证失败
+    if (ONVIF_SetAuthInfo(soap, username, password))
+	return -1;			// 验证失败
 
     memset(&req, 0x00, sizeof(req));
     memset(&rep, 0x00, sizeof(rep));
@@ -429,7 +428,7 @@ int ONVIF_GetCapabilities(const char *DeviceXAddr, struct tagCapabilities *capa,
 
     SOAP_ASSERT(NULL != DeviceXAddr);
     SOAP_ASSERT(NULL != capa);
-    SOAP_ASSERT(NULL != (soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT)));
+    soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT);
 
     *authFlag = ONVIF_SetAuthInfo(soap, username, password);
 
