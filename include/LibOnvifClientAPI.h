@@ -24,10 +24,10 @@ extern "C" {
 	int ClientGetDeviceCount(struct ProbeMatchNode *ProbeMatchHead);
 
 	//获取rtsp流的地址，有的设备需要用户名和密码才能获得，有的不需要，可置空
-	int ONVIF_ClientGetStreamUri(const char *DeviceXAddr, const char *username, const char *password, char rtspUri[256]);
+	int ONVIF_ClientGetStreamUri(const char *DeviceXAddr, const char *username, const char *password, char rtspUri[256], int timeout);
 
 	//获取设备的抓拍地址
-	int ONVIF_ClientSnapshotUri(const char *DeviceXAddr, const char *username, const char *password, char SnapshotUri[256]);
+	int ONVIF_ClientSnapshotUri(const char *DeviceXAddr, const char *username, const char *password, char SnapshotUri[256], int timeout);
 
 	//释放探测设备生成的链表
 	void FreeProbeMatchList(struct ProbeMatchNode *ProbeMatchHead);

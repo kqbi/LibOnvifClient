@@ -8,7 +8,9 @@ if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     set(THIRDPARTY "/home/kqbi/3rdparty")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(system win)    
-    set(THIRDPARTY "D:/work/projects/Thirdparty")
+    set(THIRDPARTY "D:/work/projects/3rdparty")
+    set(SSL_LIB libssl64MD.lib)
+    set(CRYPTO_LIB libcrypto64MD.lib)
 endif ()
 
 #加载自定义模块
@@ -38,6 +40,16 @@ set(Onvif_Root ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 INCLUDE_DIRECTORIES(${Onvif_Root})
+
+#ssl
+if (WIN32)
+    set(SSL_ROOT_PATH ${THIRDPARTY}/openssl)
+    set(SSL_INCLUDE_PATH ${SSL_ROOT_PATH}/include)
+    set(SSL_LIB_PATH ${SSL_ROOT_PATH}/lib/${system}/${platform}/VC/static)
+    INCLUDE_DIRECTORIES(${SSL_INCLUDE_PATH})
+    link_directories(${SSL_LIB_PATH})
+    list(APPEND LINK_LIB_LIST ${SSL_LIB} ${CRYPTO_LIB})
+endif (WIN32)
 
 if (WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")

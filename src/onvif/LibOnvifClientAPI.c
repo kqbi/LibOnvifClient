@@ -4,7 +4,7 @@
 int ONVIF_GetStreamUri(const char *MediaXAddr, char *ProfileToken, char *uri, unsigned int sizeuri, const char *username, const char *password);
 int ONVIF_GetSnapshotUri(const char *MediaXAddr, char *ProfileToken, char *uri, unsigned int sizeuri, const char *username, const char *password);
 
-int ONVIF_ClientGetStreamUri(const char *DeviceXAddr, const char *username, const char *password, char rtspUri[256])
+int ONVIF_ClientGetStreamUri(const char *DeviceXAddr, const char *username, const char *password, char rtspUri[256], int timeout)
 {
 	int stmno = 0;
 	int profile_cnt = 0;
@@ -13,8 +13,10 @@ int ONVIF_ClientGetStreamUri(const char *DeviceXAddr, const char *username, cons
 	char uri[ONVIF_ADDRESS_SIZE] = { 0 };
 
 	int flag = 1;
-	ONVIF_GetCapabilities(DeviceXAddr, &capa, username, password,&flag);
-	profile_cnt = ONVIF_GetProfiles(capa.MediaXAddr, &profiles, username, password);
+	profile_cnt = ONVIF_GetCapabilities(DeviceXAddr, &capa, username, password,&flag, timeout);
+	if (profile_cnt != 0)
+		return -1;
+	profile_cnt = ONVIF_GetProfiles(capa.MediaXAddr, &profiles, username, password, timeout);
 	
 	if (profile_cnt > stmno)
 	{
@@ -116,7 +118,7 @@ int ONVIF_ClientDetectDeviceCertainIp(const char *ip, int timeout,struct ProbeMa
 	return	ONVIF_DetectDeviceCertainIp(ip, timeout, ProbeMatchHead);
 }
 
-int ONVIF_ClientSnapshotUri(const char *DeviceXAddr, const char *username, const char *password, char SnapshotUri[256])
+int ONVIF_ClientSnapshotUri(const char *DeviceXAddr, const char *username, const char *password, char SnapshotUri[256], int timeout)
 {
 	int stmno = 0;
 	int profile_cnt = 0;
@@ -126,9 +128,9 @@ int ONVIF_ClientSnapshotUri(const char *DeviceXAddr, const char *username, const
 	char cmd[256];
 	char uri[ONVIF_ADDRESS_SIZE] = { 0 };
 	int flag = 1;
-	ONVIF_GetCapabilities(DeviceXAddr, &capa,username,password,&flag);
+	ONVIF_GetCapabilities(DeviceXAddr, &capa,username,password,&flag, timeout);
 
-	profile_cnt = ONVIF_GetProfiles(capa.MediaXAddr, &profiles, username, password);
+	profile_cnt = ONVIF_GetProfiles(capa.MediaXAddr, &profiles, username, password, timeout);
 
 	if (profile_cnt > stmno)
 	{

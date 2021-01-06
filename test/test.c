@@ -3,24 +3,25 @@
 
 int main(int argc, char **argv)
 {
-	struct ProbeMatchNode *head = NULL;
-	ONVIF_ClientDetectDevice(&head,10);
-	printf("get Device total %d\n", ClientGetDeviceCount(head));
+	//struct ProbeMatchNode *head = NULL;
+//	ONVIF_ClientDetectDevice(&head,10);
+//	printf("get Device total %d\n", ClientGetDeviceCount(head));
 
-	struct ProbeMatchNode *temp = head->next;
+//	struct ProbeMatchNode *temp = head->next;
     
-	while(temp)
-	{
+	//while(temp)
+	//{
         char rtsp[256] = { 0 };
-        printf("%s\n",temp->DeviceXAddr);
-        ONVIF_ClientGetStreamUri(temp->DeviceXAddr, "admin", "admin123", rtsp);
+		char* ip = "192.168.2.117";
+        printf("%s\n",ip);
+        ONVIF_ClientGetStreamUri(ip, "admin", "admin123", rtsp, 2);
         printf("ÊÓÆµÁ÷rtsp = %s\n", rtsp);
-        ONVIF_ClientSnapshotUri(temp->DeviceXAddr, "admin", "admin123", rtsp);
+        ONVIF_ClientSnapshotUri(ip, "admin", "admin123", rtsp, 2);
         printf("×¥ÅÄrtsp = %s\n", rtsp);
-		temp = temp->next;
-	}
+		//temp = temp->next;
+	//}
 
-	FreeProbeMatchList(head);
+//	FreeProbeMatchList(head);
 	
 	return 0;
 }	

@@ -93,8 +93,8 @@ void ONVIF_init_ProbeType(struct soap *soap, struct wsdd__ProbeType *probe);
 int ONVIF_DetectDevice(struct ProbeMatchNode **PorbeMatch, int timeout);
 int ONVIF_DetectDeviceCertainIp(const char *ip, int timeout, struct ProbeMatchNode **ProbeMatchHead);
 
-int ONVIF_GetCapabilities(const char *DeviceXAddr, struct tagCapabilities *capa, const char* username, const char *password,int *authFlag);
-int ONVIF_GetProfiles(const char *MediaXAddr, struct tagProfile **profiles, const char *username, const char *password);
+int ONVIF_GetCapabilities(const char *DeviceXAddr, struct tagCapabilities *capa, const char* username, const char *password,int *authFlag, int timeout);
+int ONVIF_GetProfiles(const char *MediaXAddr, struct tagProfile **profiles, const char *username, const char *password, int timeout);
 int make_uri_withauth(char *src_uri, char *username, char *password, char *dest_uri, unsigned int size_dest_uri);
 
 void Free_ProbeMatchNode(struct ProbeMatchNode *head);

@@ -353,7 +353,7 @@ int ONVIF_DetectDevice(struct ProbeMatchNode **ProbeMatchHead, int timeout)
 **备注：
         1). 注意：一个码流（如主码流）可以包含视频和音频数据，也可以仅仅包含视频数据。
 ************************************************************************/
-int ONVIF_GetProfiles(const char *MediaXAddr, struct tagProfile **profiles, const char *username, const char *password)
+int ONVIF_GetProfiles(const char *MediaXAddr, struct tagProfile **profiles, const char *username, const char *password, int timeout)
 {
     int i = 0;
     int result = 0;
@@ -362,7 +362,7 @@ int ONVIF_GetProfiles(const char *MediaXAddr, struct tagProfile **profiles, cons
     struct _trt__GetProfilesResponse    rep;
 
     SOAP_ASSERT(NULL != MediaXAddr);
-    soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT);
+    soap = ONVIF_soap_new(timeout);
 
     if (ONVIF_SetAuthInfo(soap, username, password))
 	return -1;			// 验证失败
@@ -419,7 +419,7 @@ EXIT:
 **备注：
     1). 其中最主要的参数之一是媒体服务地址
 ************************************************************************/
-int ONVIF_GetCapabilities(const char *DeviceXAddr, struct tagCapabilities *capa, const char *username, const char *password, int *authFlag)
+int ONVIF_GetCapabilities(const char *DeviceXAddr, struct tagCapabilities *capa, const char *username, const char *password, int *authFlag, int timeout)
 {
     int result = 0;
     struct soap *soap = NULL;
@@ -428,7 +428,7 @@ int ONVIF_GetCapabilities(const char *DeviceXAddr, struct tagCapabilities *capa,
 
     SOAP_ASSERT(NULL != DeviceXAddr);
     SOAP_ASSERT(NULL != capa);
-    soap = ONVIF_soap_new(SOAP_SOCK_TIMEOUT);
+    soap = ONVIF_soap_new(timeout);
 
     *authFlag = ONVIF_SetAuthInfo(soap, username, password);
 
